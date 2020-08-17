@@ -52,7 +52,7 @@ def read_twitter_dataset(dataset_path="", features=[], random_sample_size=0, row
         raise ValueError("Arguement dataset_path not defined !")
 
     output = []
-    with open(dataset_path) as csv_file:  
+    with open(dataset_path, encoding="utf8") as csv_file:  
         dataset = DictReader(csv_file)
         for i,row in enumerate(tqdm(dataset, leave=True, desc="Reading rows")):
             if features:
