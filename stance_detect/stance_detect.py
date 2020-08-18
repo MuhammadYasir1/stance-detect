@@ -1,56 +1,48 @@
 from tqdm import tqdm
 
 # Local Imports
-from utils import read_twitter_dataset, filter_dataset, str2list
-
+from data_loading.load_data import read_dataset
 from feature_extraction.feat_extract import FeatureExtraction
 
 
 
+
 if __name__ == "__main__":
-    num_users = 100
-    min_tweets = 10
-    # PRE PROCESSING
-    # Get twitter dataset with specific features
 
-    dataset_path = "./datasets/twitter_covid.csv"
-    features_to_get = ["user_id", "username", "tweet", "mentions", "hashtags"]
-    random_sample_size = 0
-    dataset = read_twitter_dataset(dataset_path, features_to_get, random_sample_size, 10000)
-
-    # Column names in dataset
-    user_col = "user_id"
-    hashtags_col = "hashtags"
-    mentions_col = "mentions"
-    tweets_col = "tweet"
-
-    # GATHERING DATA FOR FEATURE EXTRACTION
-    users_list = []
-    hashtags_list = []
-    mentions_list = []
-    tweets_list = []
-
-    for row in tqdm(dataset, desc="parsing rows"):
-        users_list.append(row[user_col])
-        hashtags_list.append(str2list(row[hashtags_col]))
-        mentions_list.append( str2list(row[mentions_col]) )
-        tweets_list.append(row[tweets_col])
+    ##### DATA LOADING #####
+    # Get dataset columns
+    users_list, usernames_list, tweets_list, mentions_list, hashtags_list  =  read_dataset(
+                        dataset_path="./datasets/twitter_covid.csv", 
+                        features=["user_id", "username", "tweet", "mentions", "hashtags"], 
+                        num_users=None,
+                        min_tweets=0,
+                        random_sample_size=0, 
+                        rows_to_read=10,
+                        user_col="user_id", 
+                        str2list_cols=["mentions", "hashtags"])
 
 
-    # Filter all users for top user, with atleast min tweets
-    users_to_keep = filter_dataset(users_list, num_users= num_users, min_tweets=min_tweets)
 
-    # Filtering rest of data, based on filtered users
-    zipped = zip( users_list, hashtags_list, mentions_list, tweets_list )
-    filtered_zipped = [ x for x in tqdm(zipped, desc="filtering") if x[0] in users_to_keep]
-    users_list, hashtags_list, mentions_list, tweets_list = zip(* filtered_zipped)
+    ##### FEATURE EXTRACTION #####
+    # Define features to use for Dim Reduction and Clustering
+    # CONSISTENT WITH THE PAPER
+    # T : tweets feature vectors
+    # R : mentions OR retweets feature vectors
+    # H : hashtags feature vector
+    # Feature vectors will be concatenated in order
+    FEATURES_TO_USE = ["T","R","H"]
 
-    # FEATURE EXTRACTION
     ft_extract = FeatureExtraction()
-
-    # hashtags feature vector
-    hashtag_features = ft_extract.hashtags(users_list, hashtags_list)
-    mention_features = ft_extract.mentions(users_list, mentions_list)
-    tweet_features = ft_extract.tweets(users_list, tweets_list)
+    user_feature_dict = ft_extract.get_user_feature_vectors(
+                            features_to_use=FEATURES_TO_USE,
+                            users_list, #positional args
+                            tweets_list, 
+                            mentions_list, 
+                            hashtags_list,
+                            feature_size=None,
+                            relative_freq=True
+                            )
     
+    
+    ##### DIMENSIONALITY REDUCTION #####
     
