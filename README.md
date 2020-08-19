@@ -109,7 +109,12 @@ scatter_plot_3d(user_feature_label_dict,
 
 ## 3D Scatter Plot
 
-[![./images/3d_scatter_plot.png][img_path]][https://elaaf.github.io/stance-detect/3d_scatter_plot.html]
+<!-- <p>
+  <a href="http://commonmark.org" title="Redirect to homepage">
+    <img src="http://commonmark.org/help/images/favicon.png" alt="homepage" />
+  </a>
+</p> -->
+[![3D Scatter Plot][./images/3d_scatter_plot.png]][https://elaaf.github.io/stance-detect/3d_scatter_plot.html]
 
 
 ## References
