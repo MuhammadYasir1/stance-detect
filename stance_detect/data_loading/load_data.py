@@ -5,21 +5,24 @@ from csv import DictReader
 from tqdm import tqdm
 
 # Internal
+from constants import *
+
 from utils import sorted_count, str2list
 
 
-LEAVE_BAR = False
-
 
 # Filter Dataset for top users with tweets>min_tweets
-def filter_users(users_list, num_users, min_tweets):
+def filter_users(users_list, num_top_users, min_tweets):
     """Returns filtered dataset for users top users with tweets
        greater than or equal to min_tweets.
 
     Args:
+    
         users_list (list)    : List of users to filter.
-        num_users (int)      : Number of top users to cluster
-        min_tweets (int)     : Min number of tweets to consider a user "active/engaged"
+        num_top_users (int)      : Number of top users to cluster
+        min_tweets (int)     : Min number of tweets to consider a user 
+                               "active/engaged"
+    
     Returns:
         users_to_keep (list) : list of users to keep.
     """
@@ -29,27 +32,29 @@ def filter_users(users_list, num_users, min_tweets):
     # Selecting with greater than or equal to min_tweets
     users_to_keep = [ k for k,v in tqdm(users_to_keep, desc="filtering rows", leave=LEAVE_BAR) if v>= min_tweets ]
     
-    # Selecting top num_users
-    users_to_keep = users_to_keep[:num_users]
+    # Selecting top num_top_users
+    users_to_keep = users_to_keep[:num_top_users]
 
     return users_to_keep
 
 
 
 # Get twitter dataset: uses Pythons native csv DictReader
-def read_dataset(dataset_path="", features=[], num_users=None, min_tweets=0, random_sample_size=0, rows_to_read=None, user_col="user_id", str2list_cols=[]):
+def load_dataset(dataset_path="", features=[], num_top_users=None, min_tweets=0, random_sample_size=0, rows_to_read=None, user_col="user_id", str2list_cols=[]):
     """Returns the csv twitter dataset, number of outputs same as features with order maintained.
+    
     Args:
         dataset_path (str)      : Path to the dataset csv file
-        features (list)         : List of feature/columns names to return, if no features are defined all the
-                                  columns are returned.
-        num_users (int)         : number of top users to return.
+        features (list)         : List of feature/columns names to return,
+                                  if empty, returns all columns.
+        num_top_users (int)         : number of top users to return.
         min_tweets (int)        : Criteria to filter users, with tweets>=min_tweets.
         random_sample_size (int): Number of random samples to select from the dataset
                                   must be less than the total dataset size.
         user_col (string)       : users column name. MUST BE SPECIFIED FOR FILTERING.
         str2list_cols (list)    : list of column names that have lists but read as strings.
                                   converted back to lists using str2list.
+                                  
     Returns:
         dataset (list)          : list of csv rows as dictionaries
     """
@@ -82,11 +87,11 @@ def read_dataset(dataset_path="", features=[], num_users=None, min_tweets=0, ran
     users_list = [ row[index_of_user_col] for row in dataset ]
 
     # filtering users
-    users_to_keep = filter_users(users_list, num_users, min_tweets)
+    users_to_keep = filter_users(users_list, num_top_users, min_tweets)
 
     # filtering rest of data, based on users_to_keep
     str2list_indices = [features.index(col) for col in str2list_cols]
     filtered_dataset = [ tuple([x if i not in str2list_indices else str2list(x) for i,x in enumerate(row)])
-                         for row in tqdm(dataset, desc="filtering", leave=LEAVE_BAR) if row[index_of_user_col] in users_to_keep]
+                         for row in tqdm(dataset, desc="filtering data", leave=LEAVE_BAR) if row[index_of_user_col] in users_to_keep]
 
     return zip(* filtered_dataset )

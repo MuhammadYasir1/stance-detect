@@ -2,6 +2,8 @@
 from tqdm import tqdm
 from random import sample
 
+from constants import *
+
 ## HELPER FUNCTIONS
 
 # IMPLEMENT FUZZY STRING MATCHING
@@ -21,7 +23,8 @@ def get_tweet_counts(list_of_tweets, fuzzy_matching=False, fuzzy_matching_thresh
     """
     if not fuzzy_matching:
         unique_tweets = set(list_of_tweets)
-        tweet_counts = [(tweet,list_of_tweets.count(tweet)) for tweet in unique_tweets]
+        tweet_counts = [(tweet,list_of_tweets.count(tweet)) 
+                        for tweet in tqdm(unique_tweets, desc="finding couts", leave=LEAVE_BAR]
         tweet_counts =  sorted(tweet_counts, key=lambda item: item[1], reverse=True)
 
     if fuzzy_matching:
@@ -38,7 +41,7 @@ def sorted_count(array, reverse=True):
     """Returns a list containing tuple (value, count) of each unqiue value
        in the list, in desceding order.
     """
-    sorted_count_list = [ (x,array.count(x)) for x in tqdm(set(array), desc="finding counts", leave=False) ]
+    sorted_count_list = [ (x,array.count(x)) for x in tqdm(set(array), desc="finding counts", leave=LEAVE_BAR) ]
     sorted_count_list =  sorted(sorted_count_list, key=lambda item: item[1], reverse=reverse)
     return sorted_count_list
 

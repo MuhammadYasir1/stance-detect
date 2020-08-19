@@ -6,15 +6,14 @@ import numpy as np
 from tqdm import tqdm
 
 # Local Imports
+from constants import *
+
 from utils import sorted_count, get_tweet_counts
 
 # For "n" users with "min_tweets" in dataset, we find
 # Hashtags
 # Retweeted Accounts
 # Unique Tweets
-
-
-LEAVE_BAR = False
 
 
 class FeatureExtraction():
@@ -44,6 +43,7 @@ class FeatureExtraction():
                                               If None - uses all hashtags in the dataset.
             relative_freq (bool)            : Whether to compute feature vector with relative
                                               count i.e. divide by total count.
+                                              
         Returns:
             user_feature_vectors_dict (dict): Dictionary of (user:feature_vector)
         """
@@ -66,7 +66,7 @@ class FeatureExtraction():
 
         # Concatenating user feature vectors
         user_feature_vectors_dict = {}
-        for user in set(users_list):
+        for user in tqdm(set(users_list), desc="concat user_features", leave=LEAVE_BAR):
             user_feature_vectors_dict[user] = np.concatenate( [features_dict[f][user] for f in features_to_use] )
 
         return user_feature_vectors_dict
@@ -74,6 +74,7 @@ class FeatureExtraction():
 
     def hashtags(self, users_list, hashtags_list, feature_size=None, relative_freq=True):
         """Returns a list of dictionary, with hashtag features for each user.
+        
         Args:
             users_list (list)           : List of all users in the dataset (Non-Unique).
             hashtags_list (list)        : List of list of all hashtags shared.
@@ -82,6 +83,7 @@ class FeatureExtraction():
                                           If None - uses all hashtags in the dataset.
             relative_freq (bool)        : Whether to compute feature vector with relative
                                           count i.e. divide by total count.
+                                          
         Returns:
             hashtag_features (dict)     : Dictionary, with user_col as key and
                                            hashtag feature vector as value.
@@ -110,6 +112,7 @@ class FeatureExtraction():
 
     def mentions(self, users_list, mentions_list, feature_size=None, relative_freq=True):
         """Returns a list of dictionary, with mentions features for each user.
+        
         Args:
             users_list (list)           : List of all users in the dataset (Non-Unique).
             mentions_list (list)        : List of list of all mentions shared.
@@ -118,6 +121,7 @@ class FeatureExtraction():
                                           If None - uses all mentions in the dataset.
             relative_freq (bool)        : Whether to compute feature vector with relative
                                           count i.e. divide by total count.
+                                          
         Returns:
             mention_features (dict)     : Dictionary, with user_col as key and
                                            mention feature vector as value.
@@ -143,6 +147,7 @@ class FeatureExtraction():
 
     def tweets(self, users_list, tweets_list, feature_size=None, relative_freq=True):
         """Returns a list of dictionary, with tweets features for each user.
+        
         Args:
             users_list (list)           : List of all users in the dataset (Non-Unique).
             tweets_list (list)          : List of list of all tweets shared.
@@ -151,6 +156,7 @@ class FeatureExtraction():
                                           If None - uses all tweets in the dataset.
             relative_freq (bool)        : Whether to compute feature vector with relative
                                           count i.e. divide by total count.
+                                          
         Returns:
             tweet_features (dict)       : Dictionary, with user_col as key and
                                            tweet feature vector as value.
