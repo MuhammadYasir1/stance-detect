@@ -46,7 +46,7 @@ python stance_detect\stance_detect.py
 #### API USAGE
 
 Data Loading
-```
+```python
 from data_loading.load_data import load_dataset
 
 load_dataset(dataset_path="./datasets/twitter_dataset.csv",
@@ -61,7 +61,7 @@ load_dataset(dataset_path="./datasets/twitter_dataset.csv",
 
 
 Feature Extraction
-```
+```python
 from feature_extraction.feat_extract import FeatureExtraction
 
 ft_extract = FeatureExtraction()
@@ -76,7 +76,7 @@ user_feature_dict = ft_extract.get_user_feature_vectors(
 ```
 
 Dimensionality Reduction
-```
+```python
 from dimensionality_reduction.umap import get_umap_embedding
 
 low_dim_user_feature_dict = get_umap_embedding(
@@ -89,7 +89,7 @@ low_dim_user_feature_dict = get_umap_embedding(
 
 
 Clustering
-```
+```python
 from clustering.mean_shift import mean_shift_clustering
 
 user_feature_label_dict = mean_shift_clustering( low_dim_user_feature_dict )
@@ -97,7 +97,7 @@ user_feature_label_dict = mean_shift_clustering( low_dim_user_feature_dict )
 ```
 
 Interactive Scatter Plot
-```
+```python
 from graph_plots.plot_3d import scatter_plot_3d
 
 scatter_plot_3d(user_feature_label_dict, 
