@@ -119,8 +119,8 @@ scatter_plot_3d(user_feature_label_dict,
 ```
 
 ## Output 3D Scatter Plot for Twitter Users
-Each datapoint represents a Twitter Users, with their top 5 most used
-hashtags as hover labels.
+Each datapoint in the scatter plot represents a Twitter User, 
+with their top 5 most used hashtags displayed as hover labels.
 
 Click to open interactive view !
 
