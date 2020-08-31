@@ -107,9 +107,10 @@ scatter_plot_3d(user_feature_label_dict,
                 plot_save_path="./stance_detect/results/3d_scatter_plot.html")
 ```
 
-## 3D Scatter Plot
+## Output 3D Scatter Plot for Twitter Users
+#### Click to open interactive view !
 
-[![3D Scatter Plot](/images/3d_scatter_plot.png "3D Scatter Plot, Click to view Interactive !")](https://elaaf.github.io/stance-detect/3d_scatter_plot.html)
+[![3D Scatter Plot](/images/3d_scatter_plot.gif "3D Scatter Plot, Click to view Interactive !")](https://elaaf.github.io/stance-detect/3d_scatter_plot.html)
 
 
 
@@ -117,4 +118,4 @@ scatter_plot_3d(user_feature_label_dict,
 Darwish, K., Stefanov, P., Aupetit, M., & Nakov, P. (2020). Unsupervised User Stance Detection on Twitter. Proceedings of the International AAAI Conference on Web and Social Media, 14(1), 141-152. Retrieved from https://www.aaai.org/ojs/index.php/ICWSM/article/view/7286
 
 
-# UNDER PROGRESS !
+## UNDER PROGRESS !
