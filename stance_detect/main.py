@@ -1,6 +1,3 @@
-# Local Imports
-from constants import *
-
 from data_loading.load_data import load_dataset
 from feature_extraction.feat_extract import FeatureExtraction
 from dimensionality_reduction.umap import get_umap_embedding
@@ -14,7 +11,7 @@ if __name__ == "__main__":
     ##### DATA LOADING #####
     # Get dataset columns
     users_list, usernames_list, tweets_list, mentions_list, hashtags_list  =  load_dataset(
-                        dataset_path="./datasets/twitter_covid.csv", 
+                        dataset_path="stance_detect/datasets/twitter_covid.csv", 
                         features=["user_id", "username", "tweet", "mentions", "hashtags"], 
                         num_top_users=2000,
                         min_tweets=10,
@@ -61,12 +58,12 @@ if __name__ == "__main__":
                                     min_distance=0.1,
                                     distance_metric="correlation")
     
-
-    low_dim_user_feature_dict = get_tsne_embedding(
-                                user_feature_dict,
-                                n_components=3,
-                                perplexity=30, 
-                                early_exaggeration=12)
+    # t-SNE
+    # low_dim_user_feature_dict = get_tsne_embedding(
+    #                             user_feature_dict,
+    #                             n_components=3,
+    #                             perplexity=30, 
+    #                             early_exaggeration=12)
 
     
     ##### CLUSTERING #####
