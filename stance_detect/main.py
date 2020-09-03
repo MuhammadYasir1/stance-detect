@@ -56,17 +56,17 @@ if __name__ == "__main__":
     ##### DIMENSIONALITY REDUCTION #####
     low_dim_user_feature_dict = get_umap_embedding(
                                     user_feature_dict,
-                                    n_neighbors=n_neighbors,
+                                    n_neighbors=15,
                                     n_components=3,
-                                    min_distance=min_distance,
+                                    min_distance=0.1,
                                     distance_metric="correlation")
     
 
     low_dim_user_feature_dict = get_tsne_embedding(
                                 user_feature_dict,
                                 n_components=3,
-                                perplexity=perplexity, 
-                                early_exaggeration=early_exaggeration)
+                                perplexity=30, 
+                                early_exaggeration=12)
 
     
     ##### CLUSTERING #####

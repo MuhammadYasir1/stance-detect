@@ -21,8 +21,10 @@ The low dimensional clusters can be visualized to see nicely separated user clus
 
 
 ## Requirements
-To be added.
-
+```
+# Create a Python 3.6+ virtual environment and run
+pip install -r requirements.txt
+```
 
 
 
@@ -35,15 +37,15 @@ git clone https://github.com/elaaf/stance-detect.git
 
 
 Place your Twitter Dataset CSV in ./datasets/ folder.
-Set parameters in stance_detect.py
+Set Data Pipeline Parameters in main.py
 For Standard Twitter API Dataset CSV, simply run.
 
 ```
-python stance_detect/stance_detect.py
+python3 stance_detect/main.py
 ```
 
 
-#### API USAGE
+### API USAGE
 
 Data Loading
 ```python
